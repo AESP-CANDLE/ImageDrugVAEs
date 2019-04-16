@@ -7,3 +7,6 @@ https://github.com/aclyde11/imageVAE
 The dataloader is here:
 https://github.com/aclyde11/imageVAE/blob/master/GridLSTM/DataLoader.py
 
+Email me for help:
+
+aclyde@anl.gov
