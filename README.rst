@@ -26,6 +26,9 @@ Pytorch models to create molecular VAEs using images as a latent space.
 * Free software: MIT license
 * Documentation: https://image-drug-vaes.readthedocs.io.
 
+[[|alt=octocat]]
+
+![Alt text](https://i.postimg.cc/y62GcD3V/linspace-121.png "Example interpolation of latent space")
 
 Features
 --------
