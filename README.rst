@@ -20,15 +20,14 @@ Image Drug VAEs
 
 
 
-Pytorch models to create molecular VAEs using images as a latent space.
+Pytorch models to create molecular VAEs using images as a latent space. I am currently working on this repo. To find important code before I do that (such as the dataloader) go to https://github.com/aclyde11/imageVAE/blob/master/GridLSTM/DataLoader.py
 
 
 * Free software: MIT license
 * Documentation: https://image-drug-vaes.readthedocs.io.
 
-[[|alt=octocat]]
-
-![Alt text](https://i.postimg.cc/y62GcD3V/linspace-121.png "Example interpolation of latent space")
+Example exploration of latent space
+.. image:: https://i.postimg.cc/y62GcD3V/linspace-121.png 
 
 Features
 --------
