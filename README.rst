@@ -23,14 +23,14 @@ Image Drug VAEs
 Pytorch models to create molecular VAEs using images as a latent space.
 
 
-* Free software: MIT license
-* Documentation: https://image-drug-vaes.readthedocs.io.
-
-
-Features
+How To
 --------
+Currently, this will just train GridLSTM on perfect RDKIT images.
 
-* TODO
+* Smiles to Image Training.
+    Using the config file, one can simply run ``python train_im_smi.py``
+
+#todo Support training Smiles to Image using a model that generates images
 
 Credits
 -------

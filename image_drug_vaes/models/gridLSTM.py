@@ -1,9 +1,7 @@
 import torch
-from torch.autograd import Variable
-from skimage import io, transform
-from torch import nn, optim
-from torch.nn import functional as F
 import torchvision
+from torch import nn
+
 
 class Encoder(nn.Module):
     """
@@ -14,7 +12,7 @@ class Encoder(nn.Module):
         super(Encoder, self).__init__()
         self.enc_image_size = encoded_image_size
 
-        resnet = torchvision.models.resnet34(pretrained=True)  # pretrained ImageNet ResNet-101
+        resnet = torchvision.models.resnet18(pretrained=True)  # pretrained ImageNet ResNet-101
 
         # Remove linear and pool layers (since we're not doing classification)
         modules = list(resnet.children())[:-2]
@@ -44,92 +42,6 @@ class Encoder(nn.Module):
         for p in self.resnet.parameters():
             p.requires_grad = fine_tune
 
-
-
-# def conv5x5(in_planes, out_planes, stride=1):
-#     """5x5 convolution with padding"""
-#     return nn.Conv2d(in_planes, out_planes, kernel_size=5, stride=stride,
-#                      padding=2, bias=False)
-#
-#
-# class BasicBlock(nn.Module):
-#
-#     def __init__(self, inplanes, planes, stride=1):
-#         super(BasicBlock, self).__init__()
-#         self.conv1 = conv5x5(inplanes, planes, stride)
-#         self.bn1 = nn.BatchNorm2d(planes)
-#         self.relu = nn.ReLU(inplace=True)
-#         self.conv2 = conv5x5(planes, planes)
-#         self.bn2 = nn.BatchNorm2d(planes)
-#
-#         self.stride = stride
-#         if self.stride > 1:
-#             self.maxpooling = nn.MaxPool2d(kernel_size=self.stride, stride=1, padding=0, dilation=1, ceil_mode=False)
-#
-#     def forward(self, x):
-#         print("INPUT SHAPE: ", x.shape)
-#         identity = x
-#
-#         out = self.conv1(x)
-#         out = self.bn1(out)
-#         out = self.relu(out)
-#
-#         out = self.conv2(out)
-#         out = self.bn2(out)
-#
-#         if self.stride > 1:
-#             out = self.maxpooling(out)
-#             identity   = self.maxpooling(identity)
-#         print("IDEN SHAPE: ", identity.shape)
-#         print("out SHAPE: ", out.shape)
-#         out += identity
-#         out = self.relu(out)
-#
-#         return out
-#
-#     def get_output_size(self, input_dim):
-#         if self.stride == 1:
-#             return input_dim
-#         else:
-#             return (input_dim + 2 * 0 - 1 * (2 - 1) - 1) / 1 + 1
-#
-#
-# class Encoder(nn.Module):
-#     def __init__(self):
-#         super(Encoder, self).__init__()
-#         params = {
-#             'block1_layers' : 2,
-#             'block2_layers' : 4,
-#             'block4_layers' : 3
-#         }
-#
-#         self.params = params
-#
-#         self.block1 = self.__make__blocks(params['block1_layers'], pooling=1, inplanes=3, outplanes=3)
-#         self.block2 = self.__make__blocks(params['block2_layers'], pooling=2, inplanes=3, outplanes=3)
-#         self.block3 = self.__make__blocks(1, pooling=1, inplanes=3, outplanes=3)
-#         self.block4 = self.__make__blocks(params['block4_layers'], pooling=2, inplanes=3, outplanes=3)
-#         self.statefc = nn.Sequential(nn.Linear(250, 250), nn.ReLU())
-#
-#         self.gridLSTM = None
-#         self.attention = None
-#
-#
-#     def __make__blocks(self, number_blocks, pooling=1, inplanes=3, outplanes=3):
-#         layers = []
-#         for i in range(number_blocks):
-#             layers.append(BasicBlock(inplanes, outplanes, pooling))
-#         return nn.Sequential(*layers)
-#
-#     def forward(self, x):
-#         out = self.block1(x)
-#         out = self.block2(out)
-#         atten_out = self.block3(out)
-#         out = self.block4(atten_out)
-#         out = out.permute(0, 2, 3, 1)
-#
-#
-#         return out
 
 class Attention(nn.Module):
     """
@@ -193,9 +105,8 @@ class GridLSTMCell2d(nn.Module):
         self.lstm1 = nn.LSTMCell(embed_dim + encoder_dim, decoder_dim, bias=True)
         self.lstm2 = nn.LSTMCell(embed_dim + encoder_dim, decoder_dim, bias=True)
 
-
-    def forward(self, x, hs, ms): # x : (batch, embedded), H : (batch, 2, h), M : (batch, 2, m)
-        H = hs[0] +hs[1]
+    def forward(self, x, hs, ms):  # x : (batch, embedded), H : (batch, 2, h), M : (batch, 2, m)
+        H = hs[0] + hs[1]
         m1 = ms[0]
         m2 = ms[1]
 
@@ -210,7 +121,7 @@ class StackGridLSTMCell2d(nn.Module):
     Decoder.
     """
 
-    def __init__(self,  attention_dim, embed_dim, decoder_dim, vocab_size, encoder_dim=2048, dropout=0.5):
+    def __init__(self, attention_dim, embed_dim, decoder_dim, vocab_size, encoder_dim=2048, dropout=0.5):
         """
         :param attention_dim: size of attention network
         :param embed_dim: embedding size
@@ -232,20 +143,16 @@ class StackGridLSTMCell2d(nn.Module):
         self.lstm2 = GridLSTMCell2d(attention_dim, embed_dim, decoder_dim, vocab_size, encoder_dim, dropout)
         self.lstm3 = GridLSTMCell2d(attention_dim, embed_dim, decoder_dim, vocab_size, encoder_dim, dropout)
 
-
-
-    def forward(self, x, hs, ms): # x : (batch, embedded), H : (batch, 2, h), M : (batch, 2, m)
+    def forward(self, x, hs, ms):  # x : (batch, embedded), H : (batch, 2, h), M : (batch, 2, m)
         hsA1, hsB1, hsB2, hsB3 = hs
         msA1, msB1, msB2, msB3 = ms
 
         hsA2, hsB1prime, msA2, msB1prime = self.lstm1(x, [hsA1, hsB1], [msA1, msB1])
-        hsA3, hsB2prime, msA3, msB2prime = self.lstm2(x,  [hsA2, hsB2], [msA2, msB2])
+        hsA3, hsB2prime, msA3, msB2prime = self.lstm2(x, [hsA2, hsB2], [msA2, msB2])
         hsA4, hsB3prime, msA4, msB3prime = self.lstm3(x, [hsA3, hsB3], [msA3, msB3])
 
-        #need
+        # need
         return hsA4, msA4, [hsB1prime, hsB2prime, hsB3prime], [msB1prime, msB2prime, msB3prime]
-
-
 
 
 class GridLSTMDecoderWithAttention(nn.Module):
@@ -318,7 +225,6 @@ class GridLSTMDecoderWithAttention(nn.Module):
         c = self.init_c(mean_encoder_out)
         return h, c
 
-
     def forward(self, encoder_out, encoded_captions, caption_lengths, teacher_forcing=True, use_first_state=False):
         """
         Forward propagation.
@@ -343,7 +249,7 @@ class GridLSTMDecoderWithAttention(nn.Module):
 
         # Embedding
         embeddings = self.embedding(encoded_captions)  # (batch_size, max_caption_length, embed_dim)
-        #print("embedding shape ", embeddings.shape)
+        # print("embedding shape ", embeddings.shape)
 
         # Initialize LSTM state
         h, m = self.init_hidden_state(encoder_out)  # (batch_size, decoder_dim)
@@ -365,17 +271,17 @@ class GridLSTMDecoderWithAttention(nn.Module):
 
             batch_size_t = sum([l > t for l in decode_lengths])
 
-
             attention_weighted_encoding, alpha = self.attention(encoder_out[:batch_size_t],
                                                                 h[:batch_size_t])
             gate = self.sigmoid(self.f_beta(h[:batch_size_t]))  # gating scalar, (batch_size_t, encoder_dim)
             attention_weighted_encoding = gate * attention_weighted_encoding
 
             lstm_input = None
-            #print("embedding size", embeddings.shape, attention_weighted_encoding.shape)
+            # print("embedding size", embeddings.shape, attention_weighted_encoding.shape)
 
             if not teacher_forcing and t > 0:
-                lstm_input = torch.cat([self.embedding(torch.max(predictions[:batch_size_t, t, :], dim=1)[1].long()), attention_weighted_encoding], dim=1)
+                lstm_input = torch.cat([self.embedding(torch.max(predictions[:batch_size_t, t, :], dim=1)[1].long()),
+                                        attention_weighted_encoding], dim=1)
             else:
                 lstm_input = torch.cat([embeddings[:batch_size_t, t, :], attention_weighted_encoding], dim=1)
 
@@ -384,11 +290,11 @@ class GridLSTMDecoderWithAttention(nn.Module):
 
             newhs.insert(0, h)
             newms.insert(0, m)
-            newhs = map(lambda x : x[:batch_size_t, ...], newhs)
-            newms = map(lambda x : x[:batch_size_t, ...], newms)
+            newhs = map(lambda x: x[:batch_size_t, ...], newhs)
+            newms = map(lambda x: x[:batch_size_t, ...], newms)
 
-            #print("input shape", lstm_input.shape)
-            #print('running grid ', t)
+            # print("input shape", lstm_input.shape)
+            # print('running grid ', t)
             h, m, newhs, newms = self.decode_step1(lstm_input, newhs, newms)
 
             preds = self.fc(self.dropout(h))  # (batch_size_t, vocab_size)
