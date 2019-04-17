@@ -13,17 +13,15 @@ from utils.utils import Invert
 
 
 class MoleLoader(torch.utils.data.Dataset):
-    def __init__(self, df, vocab, max_len=70, num=None):
+    def __init__(self, df, vocab, max_len=70, start_char='!', end_char='?', num=None):
         super(MoleLoader, self).__init__()
 
         self.df = df
         self.vocab = list(vocab)
         self.embedding_width = max_len
-        self.start_char = '!'
-        self.end_char = '?'
-        self.vocab.append('!')
-        self.vocab.append('?')
-        self.vocab.insert(0, ' ')
+        self.start_char = start_char
+        self.end_char = end_char
+
         self.vocab =  {k: v for v, k in enumerate(self.vocab)}
         self.charset = {k: v for v ,k in self.vocab.items()}
 

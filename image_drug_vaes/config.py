@@ -54,7 +54,9 @@ class Config():
             'train_data': 'file.csv',
             'val_data': 'file.csv',
             'vocab_file' : 'vocab.pkl', #use make vocab utility on your dataset
-            'vocab_max_len' : 70
+            'vocab_max_len' : 70,
+            'start_char' : '!',
+            'end_char' :  '?'
         }
 
     def get_im_smi_config(self):
@@ -62,3 +64,6 @@ class Config():
 
     def get_im_im_config(self):
         return {**self.config_global, **self.config_im_im}
+
+    def get_global_config(self):
+        return self.config_global
