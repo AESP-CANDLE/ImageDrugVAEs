@@ -27,6 +27,7 @@ Pytorch models to create molecular VAEs using images as a latent space. I am cur
 * Documentation: https://image-drug-vaes.readthedocs.io.
 
 Example exploration of latent space
+
 .. image:: https://i.postimg.cc/y62GcD3V/linspace-121.png 
 
 Features
