@@ -27,9 +27,9 @@ vocab = pickle.load(open(config['vocab_file'], "rb"))
 vocab = {k: v for v, k in enumerate(vocab)}
 
 train_data = MoleLoader(pd.read_csv("moses/data/train.csv"), vocab, max_len=config['vocab_max_len'],
-                        start_char=config['start_char'], end_char=vocab['end_char'])
+                        start_char=config['start_char'], end_char=config['end_char'])
 val_data = MoleLoader(pd.read_csv("moses/data/test.csv"), vocab, max_len=config['vocab_max_len'],
-                      start_char=config['start_char'], end_char=vocab['end_char'])
+                      start_char=config['start_char'], end_char=config['end_char'])
 
 train_loader_food = torch.utils.data.DataLoader(
     train_data,
