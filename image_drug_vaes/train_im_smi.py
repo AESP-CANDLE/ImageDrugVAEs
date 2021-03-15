@@ -124,6 +124,10 @@ def train(epoch):
             imgs_orig = imgs_orig.cuda(1)
             caps = embed.cuda(2)
             caplens = embedlen.cuda(2).view(-1, 1)
+        else:
+            imgs_orig = imgs_orig.cuda()
+            caps = embed.cuda()
+            caplens = embedlen.cuda().view(-1, 1)
 
         # Forward prop.
         imgs_vae = encoder(imgs_orig)
