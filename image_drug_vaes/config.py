@@ -8,13 +8,13 @@ class Config():
 
         self.config_im_smi = {
             'log_images_edit_dist' : None, # put a folder here and it will output images with smiles
-            'save_model_checkpoints' : 'best', #'best' saves only best model and optimizer states, None doesn't do anything, 'all' saves per epoch
-            'log_interval' :  4, # batch interval to print to screen
+            'save_model_checkpoints' : 'all', #'best' saves only best model and optimizer states, None doesn't do anything, 'all' saves per epoch
+            'log_interval' :  12, # batch interval to print to screen
             'print_example_smiles' : False, #will output examples of smiles
             'use_checkpoint' : None,
             'load_checkpoint' : None,
 
-            'batch_size' : 350,
+            'batch_size' : 512,
             'num_epochs' : 1000,
             'early_stopping' : None,  #import and use EarlyStopping module from utils
             'distributed'     : False,  #run models on separate GPUs and shuffle data, use EXPORT CUDA DEVICES to specify three devices.
