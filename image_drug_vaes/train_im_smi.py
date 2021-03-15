@@ -47,7 +47,8 @@ decoder = GridLSTMDecoderWithAttention(attention_dim=config['attention_dim'],
                                        decoder_dim=config['decoder_dim'],
                                        vocab_size=len(vocab),
                                        encoder_dim=config['encoder_dim'],
-                                       dropout=config['dropout'])
+                                       dropout=config['dropout'],
+                                       device=device)
 
 decoder.fine_tune_embeddings(True)
 
