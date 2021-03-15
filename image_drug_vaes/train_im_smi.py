@@ -161,7 +161,7 @@ def train(epoch):
         total_losses.update(loss.item(), sum(decode_lengths))
 
         # acc_per_c
-        acc_c = torch.max(scores.data, dim=1)[1].eq(targets).sum().item() / float(targets.shape[0])
+        acc_c = torch.max(scores.data, dim=1)[1].eq(targets.data).sum().item() / float(targets.shape[0])
         total_per_char_acc.update(acc_c)
 
         # acc_per_string
