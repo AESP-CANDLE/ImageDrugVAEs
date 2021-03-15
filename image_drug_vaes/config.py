@@ -51,8 +51,8 @@ class Config():
             'cuda': True,
             'seed': 42,  # set torch manuel seed
             'data_loader_kwargs': {'num_workers': 64, 'pin_memory': True},  # passes to dataloader
-            'train_data': 'file.csv',
-            'val_data': 'file.csv',
+            'train_data': 'moses/data/train.csv',
+            'val_data': 'moses/data/test.csv',
             'vocab_file' : 'vocab.pkl', #use make vocab utility on your dataset
             'vocab_max_len' : 70,
             'start_char' : '!',
