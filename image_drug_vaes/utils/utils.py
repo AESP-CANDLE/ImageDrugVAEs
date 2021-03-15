@@ -9,6 +9,8 @@ from torchvision import transforms
 
 
 class PretendHolder():
+    def __call__(self):
+        return self
     def __enter__(self):
         return self
     def __exit__(self):
