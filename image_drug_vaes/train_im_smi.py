@@ -120,20 +120,15 @@ def train(epoch):
 
     for batch_idx, (embed, data, embedlen) in enumerate(train_loader_food):
         imgs_orig = data.float()
-        if config['distributed']:
-            imgs_orig = imgs_orig.cuda(1)
-            caps = embed.cuda(2)
-            caplens = embedlen.cuda(2).view(-1, 1)
-        else:
-            imgs_orig = imgs_orig.cuda()
-            caps = embed.cuda()
-            caplens = embedlen.cuda().view(-1, 1)
+        imgs_orig = imgs_orig.cuda()
+        caps = embed.cuda()
+        caplens = embedlen.cuda().view(-1, 1)
 
         # Forward prop.
         imgs_vae = encoder(imgs_orig)
 
         if config['distributed']:
-            imgs_vae = imgs_vae.cuda(2)
+            imgs_vae = imgs_vae.cuda()
 
         scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
                                                                         teacher_forcing=bool(epoch < 3))
