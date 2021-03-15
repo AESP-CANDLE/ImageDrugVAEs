@@ -27,7 +27,7 @@ class Config():
             'encoder_dim': 512,
             # # # Optimizer
             'enc_optimizer': 'adam',  # pass optimizer here
-            'enc_optimizer_kwags': {'lr': 0.001},  # pass other options here
+            'enc_optimizer_kwargs': {'lr': 0.001},  # pass other options here
             'enc_lr_scheduling'  : None, # ['constant', 'reduce_on_plateau', 'annealing']
             'enc_lr_scheduling_kwargs' : None, # pass kwargs here
 
