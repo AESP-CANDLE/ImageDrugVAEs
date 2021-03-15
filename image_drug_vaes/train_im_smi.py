@@ -145,11 +145,11 @@ def train(epoch):
         scores_copy = scores.clone()
         targets_copy = targets.clone()
 
+
         scores = pack_padded_sequence(scores, decode_lengths, batch_first=True)
         targets = pack_padded_sequence(targets, decode_lengths, batch_first=True)
-
         # Calculate loss
-        loss = criterion(scores, targets)
+        loss = criterion(scores.data, targets.data)
 
         # Add doubly stochastic attention regularization
         loss += config['alpha_c'] * ((1. - alphas.sum(dim=1)) ** 2).mean()
