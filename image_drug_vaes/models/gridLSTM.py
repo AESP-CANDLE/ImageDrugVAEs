@@ -160,7 +160,7 @@ class GridLSTMDecoderWithAttention(nn.Module):
     Decoder.
     """
 
-    def __init__(self, attention_dim, embed_dim, decoder_dim, vocab_size, encoder_dim=512, dropout=0.5):
+    def __init__(self, attention_dim, embed_dim, decoder_dim, vocab_size, encoder_dim=512, dropout=0.5, device=None):
         """
         :param attention_dim: size of attention network
         :param embed_dim: embedding size
@@ -170,6 +170,8 @@ class GridLSTMDecoderWithAttention(nn.Module):
         :param dropout: dropout
         """
         super(GridLSTMDecoderWithAttention, self).__init__()
+
+        self.device= device
 
         self.encoder_dim = encoder_dim
         self.attention_dim = attention_dim
@@ -261,8 +263,8 @@ class GridLSTMDecoderWithAttention(nn.Module):
         decode_lengths = (caption_lengths - 1).tolist()
 
         # Create tensors to hold word predicion scores and alphas
-        predictions = torch.zeros(batch_size, max(decode_lengths), vocab_size).cuda(7)
-        alphas = torch.zeros(batch_size, max(decode_lengths), num_pixels).cuda(7)
+        predictions = torch.zeros(batch_size, max(decode_lengths), vocab_size).to(self.device)
+        alphas = torch.zeros(batch_size, max(decode_lengths), num_pixels).to(self.device)
 
         # At each time-step, decode by
         # attention-weighing the encoder's output based on the decoder's previous hidden state output
