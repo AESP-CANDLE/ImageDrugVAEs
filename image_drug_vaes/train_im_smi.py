@@ -118,8 +118,7 @@ def train(epoch):
         # Forward prop.
         imgs_vae = encoder(imgs_orig)
 
-        if config['distributed']:
-            imgs_vae = imgs_vae.to(device)
+        imgs_vae = imgs_vae.to(device)
 
         scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
                                                                         teacher_forcing=bool(epoch < 3))
@@ -190,7 +189,6 @@ def train(epoch):
             #     a = add_text_to_image(imgs_vae[i, ...], s2, "vae", str(dist))
             #     wrongs.append(a)
 
-
         if batch_idx % config['log_interval'] == 0:
             # print("wrongs len: {}, correct len: {}".format(len(wrongs), len(corrects)))
             print(
@@ -215,19 +213,17 @@ def test(epoch):
     total_editDist = AverageMeter()
 
     for batch_idx, (embed, data, embedlen) in enumerate(train_loader_food):
-        imgs = data.float()
-        if config['distributed']:
-            imgs = imgs.cuda()
-            caps = embed.cuda()
-            caplens = embedlen.cuda().view(-1, 1)
+        imgs_orig = data.float()
+        imgs_orig = imgs_orig.to(device)
+        caps = embed.to(device)
+        caplens = embedlen.to(device).view(-1, 1)
 
         # Forward prop.
-        imgs = encoder(imgs)
+        imgs_vae = encoder(imgs_orig)
 
-        if config['distributed']:
-            imgs = imgs.cuda()
+        imgs_vae = imgs_vae.to(device)
 
-        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs, caps, caplens,
+        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
                                                                         teacher_forcing=bool(epoch < 3))
 
         # Since we decoded starting with <start>, the targets are all words after <start>, up to <end>
@@ -237,11 +233,11 @@ def test(epoch):
         scores_copy = scores.clone()
         targets_copy = targets.clone()
 
-        scores, _ = pack_padded_sequence(scores, decode_lengths, batch_first=True)
-        targets, _ = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+        scores = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+        targets = pack_padded_sequence(targets, decode_lengths, batch_first=True)
 
         # Calculate loss
-        loss = criterion(scores, targets)
+        loss = criterion(scores.data, targets.data)
 
         # Add doubly stochastic attention regularization
         loss += config['alpha_c'] * ((1. - alphas.sum(dim=1)) ** 2).mean()
@@ -250,7 +246,7 @@ def test(epoch):
         total_losses.update(loss.item(), sum(decode_lengths))
 
         # acc_per_c
-        acc_c = torch.max(scores, dim=1)[1].eq(targets).sum().item() / float(targets.shape[0])
+        acc_c = torch.max(scores.data, dim=1)[1].eq(targets.data).sum().item() / float(targets.data.shape[0])
         total_per_char_acc.update(acc_c)
 
         # acc_per_string
