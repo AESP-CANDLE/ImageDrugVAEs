@@ -261,12 +261,6 @@ def test(epoch):
             total_string_acc.update(1.0 if s1 == s2 else 0.0)
             total_editDist.update(levenshteinDistance(s1, s2))
 
-        if config['use_comet']:
-            experiment.log_metric('loss', loss.item() / sum(decode_lengths))
-            experiment.log_metric("acc_per_char", total_per_char_acc.avg)
-            experiment.log_metric("acc_per_string", total_string_acc.avg)
-            experiment.log_metric("editDist", total_editDist.avg)
-
         return total_losses.avg
 
 
