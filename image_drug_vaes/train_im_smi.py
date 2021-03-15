@@ -2,10 +2,6 @@ from config import *
 
 config = Config().get_im_smi_config()
 
-if config['cuda_devices'] is not None:
-    import os
-    os.environ['CUDA_VISIBLE_DEVICES'] = config['cuda_devices']
-
 import datetime
 import pickle
 
@@ -55,10 +51,7 @@ decoder = GridLSTMDecoderWithAttention(attention_dim=config['attention_dim'],
 
 decoder.fine_tune_embeddings(True)
 
-if config['distributed'] and config['cuda']:
-    decoder.cuda(2)
-elif config['cuda']:
-    decoder.cuda()
+decoder = decoder.to(device)
 
 decoder_optimizer = None
 if config['dec_optimizer'] == 'adam':
@@ -83,10 +76,7 @@ elif config['dec_lr_scheduling'] == 'reduce_on_plateau':
 encoder = Encoder()
 encoder.fine_tune(config['train_encoder'])
 
-if config['distributed'] and config['cuda']:
-    encoder.cuda(1)
-elif config['cuda']:
-    encoder.cuda()
+encoder = encoder.to(device)
 
 encoder_optimizer = None
 if config['enc_optimizer'] == 'adam':
@@ -106,7 +96,7 @@ elif config['enc_lr_scheduling'] == 'reduce_on_plateau':
 
 criterion = nn.CrossEntropyLoss()
 if config['distributed']:
-    criterion = criterion.cuda(2)
+    criterion = criterion.to(device)
 
 
 def train(epoch):
@@ -120,15 +110,15 @@ def train(epoch):
 
     for batch_idx, (embed, data, embedlen) in enumerate(train_loader_food):
         imgs_orig = data.float()
-        imgs_orig = imgs_orig.cuda()
-        caps = embed.cuda()
-        caplens = embedlen.cuda().view(-1, 1)
+        imgs_orig = imgs_orig.to(device)
+        caps = embed.to(device)
+        caplens = embedlen.to(device).view(-1, 1)
 
         # Forward prop.
         imgs_vae = encoder(imgs_orig)
 
         if config['distributed']:
-            imgs_vae = imgs_vae.cuda()
+            imgs_vae = imgs_vae.to(device)
 
         scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
                                                                         teacher_forcing=bool(epoch < 3))
@@ -231,15 +221,15 @@ def test(epoch):
     for batch_idx, (embed, data, embedlen) in enumerate(train_loader_food):
         imgs = data.float()
         if config['distributed']:
-            imgs = imgs.cuda(1)
-            caps = embed.cuda(2)
-            caplens = embedlen.cuda(2).view(-1, 1)
+            imgs = imgs.cuda()
+            caps = embed.cuda()
+            caplens = embedlen.cuda().view(-1, 1)
 
         # Forward prop.
         imgs = encoder(imgs)
 
         if config['distributed']:
-            imgs = imgs.cuda(2)
+            imgs = imgs.cuda()
 
         scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs, caps, caplens,
                                                                         teacher_forcing=bool(epoch < 3))
