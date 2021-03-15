@@ -4,7 +4,6 @@ config = Config().get_im_smi_config()
 
 if config['cuda_devices'] is not None:
     import os
-
     os.environ['CUDA_VISIBLE_DEVICES'] = config['cuda_devices']
 
 import datetime
@@ -12,7 +11,6 @@ import pickle
 
 import pandas as pd
 import torch
-from comet_ml import Experiment
 from torch import nn, optim
 from torch.nn.utils.rnn import pack_padded_sequence
 
@@ -24,16 +22,13 @@ torch.manual_seed(config['seed'])
 
 ## begin comet stuff
 experiment = CometHolder()
-if config['use_comet']:
-    experiment = Experiment(project_name=config['comet_project_name'])
-    experiment.log_parameters(config)
 
 vocab = pickle.load(open(config['vocab_file'], "rb"))
 vocab = {k: v for v, k in enumerate(vocab)}
 
-train_data = MoleLoader(pd.read_csv("/homes/aclyde11/moses/data/train.csv"), vocab, max_len=config['vocab_max_len'],
+train_data = MoleLoader(pd.read_csv("moses/data/train.csv"), vocab, max_len=config['vocab_max_len'],
                         start_char=config['start_char'], end_char=vocab['end_char'])
-val_data = MoleLoader(pd.read_csv("/homes/aclyde11/moses/data/test.csv"), vocab, max_len=config['vocab_max_len'],
+val_data = MoleLoader(pd.read_csv("moses/data/test.csv"), vocab, max_len=config['vocab_max_len'],
                       start_char=config['start_char'], end_char=vocab['end_char'])
 
 train_loader_food = torch.utils.data.DataLoader(

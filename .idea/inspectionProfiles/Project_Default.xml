@@ -1,0 +1,17 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="environment.openmmWrapper.SystemParams" />
+          <option value="pymol.stored" />
+          <option value="mmgpbsa.systemloader.Config.cuda" />
+          <option value="mmgpbsa.systemloader.Config.opencl" />
+          <option value="mmgpbsa.systemloader.Config.stepSize" />
+          <option value="mmgpbsa.systemloader.Config.calcFrames" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
