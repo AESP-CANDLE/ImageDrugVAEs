@@ -17,7 +17,7 @@ class Config():
             'batch_size' : 350,
             'num_epochs' : 1000,
             'early_stopping' : None,  #import and use EarlyStopping module from utils
-            'distrubted'     : False,  #run models on separate GPUs and shuffle data, use EXPORT CUDA DEVICES to specify three devices.
+            'distributed'     : False,  #run models on separate GPUs and shuffle data, use EXPORT CUDA DEVICES to specify three devices.
             'grad_clip' : 5,
             'alpha_c' : 1.0,  # regularization parameter for 'doubly stochastic attention', as in the paper
 
