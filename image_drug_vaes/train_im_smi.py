@@ -190,11 +190,6 @@ def train(epoch):
             #     a = add_text_to_image(imgs_vae[i, ...], s2, "vae", str(dist))
             #     wrongs.append(a)
 
-        if config['use_comet']:
-            experiment.log_metric('loss', loss.item() / sum(decode_lengths))
-            experiment.log_metric("acc_per_char", total_per_char_acc.avg)
-            experiment.log_metric("acc_per_string", total_string_acc.avg)
-            experiment.log_metric("editDist", total_editDist.avg)
 
         if batch_idx % config['log_interval'] == 0:
             # print("wrongs len: {}, correct len: {}".format(len(wrongs), len(corrects)))
