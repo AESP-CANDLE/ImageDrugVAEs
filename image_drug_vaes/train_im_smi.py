@@ -205,14 +205,14 @@ def train(epoch):
 
 def test(epoch):
     print("Epoch {}: batch_size {}".format(epoch, config['batch_size']))
-    decoder.train()  # train mode (dropout and batchnorm is used)
-    encoder.train()
+    decoder.test()  # train mode (dropout and batchnorm is used)
+    encoder.test()
     total_losses = AverageMeter()  # loss (per word decoded)
     total_per_char_acc = AverageMeter()
     total_string_acc = AverageMeter()
     total_editDist = AverageMeter()
 
-    for batch_idx, (embed, data, embedlen) in enumerate(train_loader_food):
+    for batch_idx, (embed, data, embedlen) in enumerate(val_loader_food):
         imgs_orig = data.float()
         imgs_orig = imgs_orig.to(device)
         caps = embed.to(device)
