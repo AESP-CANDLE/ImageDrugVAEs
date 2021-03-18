@@ -14,21 +14,25 @@ from models.gridLSTM import GridLSTMDecoderWithAttention, Encoder
 from utils.DataLoader import MoleLoader
 from utils.utils import clip_gradient, AverageMeter, levenshteinDistance, CometHolder
 
+def get_args():
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('-m', required=True, help='saved trained model file (.pt)', type=str)
+
+    return parser.parse_args()
 
 if __name__ == '__main__':
+    args = get_args()
+    loaded = torch.load(args.m, map_location='cpu')
+
     vocab = pickle.load(open(config['vocab_file'], "rb"))
     vocab = {k: v for v, k in enumerate(vocab)}
 
     train_data = MoleLoader(pd.read_csv("moses/data/train.csv"), vocab, max_len=config['vocab_max_len'],
                             start_char=config['start_char'], end_char=config['end_char'])
-    val_data = MoleLoader(pd.read_csv("moses/data/test.csv"), vocab, max_len=config['vocab_max_len'],
-                          start_char=config['start_char'], end_char=config['end_char'])
 
     train_loader_food = torch.utils.data.DataLoader(
         train_data,
-        batch_size=config['batch_size'], shuffle=True, drop_last=True, **config['data_loader_kwargs'])
-    val_loader_food = torch.utils.data.DataLoader(
-        val_data,
         batch_size=config['batch_size'], shuffle=True, drop_last=True, **config['data_loader_kwargs'])
 
     charset = train_data.charset
@@ -48,24 +52,8 @@ if __name__ == '__main__':
                                            device=device)
 
     decoder.fine_tune_embeddings(True)
-
+    decoder.load_state_dict(loaded['decoder_state_dict'])
     decoder = decoder.to(device)
-
-    decoder_optimizer = None
-    if config['dec_optimizer'] == 'adam':
-        decoder_optimizer = torch.optim.Adam(params=filter(lambda p: p.requires_grad, decoder.parameters()),
-                                             **config['dec_optimizer_kwargs'])
-    elif config['dec_optimizer'] == 'sgd':
-        decoder_optimizer = torch.optim.SGD(params=filter(lambda p: p.requires_grad, decoder.parameters()),
-                                            **config['dec_optimizer_kwargs'])
-    else:
-        raise ValueError("I'm going to bet in config.py an optimizer isn't 'adam' or 'sgd'! Fix it.")
-
-    decoder_sched = None
-    if config['dec_lr_scheduling'] == 'annealing':
-        sched = torch.optim.lr_scheduler.CosineAnnealingLR(decoder_optimizer, **config['dec_lr_scheduling_kwargs'])
-    elif config['dec_lr_scheduling'] == 'reduce_on_plateau':
-        raise ValueError("The config says I will implement this. But I have not. Stick to annealing.")
 
     ####
 
@@ -73,29 +61,10 @@ if __name__ == '__main__':
 
     encoder = Encoder()
     encoder.fine_tune(config['train_encoder'])
-
+    encoder.load_state_dict(loaded['encoder_state_dict'])
     encoder = encoder.to(device)
 
-    encoder_optimizer = None
-    if config['enc_optimizer'] == 'adam':
-        encoder_optimizer = torch.optim.Adam(params=filter(lambda p: p.requires_grad, encoder.parameters()),
-                                             **config['enc_optimizer_kwargs'])
-    elif config['enc_optimizer'] == 'sgd':
-        encoder_optimizer = torch.optim.SGD(params=filter(lambda p: p.requires_grad, encoder.parameters()),
-                                            **config['enc_optimizer_kwargs'])
-    else:
-        raise ValueError("I'm going to bet in config.py an optimizer isn't 'adam' or 'sgd'! Fix it.")
-
-    encoder_sched = None
-    if config['enc_lr_scheduling'] == 'annealing':
-        encoder_sched = torch.optim.lr_scheduler.CosineAnnealingLR(encoder_optimizer, **config['enc_lr_scheduling_kwargs'])
-    elif config['enc_lr_scheduling'] == 'reduce_on_plateau':
-        raise ValueError("The config says I will implement this. But I have not. Stick to annealing.")
-
-    criterion = nn.CrossEntropyLoss()
-    if config['distributed']:
-        criterion = criterion.to(device)
-
+    criterion = nn.CrossEntropyLoss().to(device)
 
     def test(epoch):
         print("Epoch {}: batch_size {}".format(epoch, config['batch_size']))
@@ -106,7 +75,7 @@ if __name__ == '__main__':
         total_string_acc = AverageMeter()
         total_editDist = AverageMeter()
 
-        for batch_idx, (embed, data, embedlen) in enumerate(val_loader_food):
+        for batch_idx, (embed, data, embedlen) in enumerate(train_loader_food):
             imgs_orig = data.float()
             imgs_orig = imgs_orig.to(device)
             caps = embed.to(device)
