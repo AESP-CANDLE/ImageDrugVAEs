@@ -22,7 +22,7 @@ def kl_divergence(z, mu, std):
     p = torch.distributions.Normal(torch.zeros_like(mu), torch.ones_like(std))
     try:
         q = torch.distributions.Normal(mu, std)
-    except RuntimeError:
+    except:
         print(mu)
 
     # 2. get the probabilities from the equation
