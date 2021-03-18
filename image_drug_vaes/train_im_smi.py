@@ -226,8 +226,8 @@ def train(epoch):
 
 def test(epoch):
     print("Epoch {}: batch_size {}".format(epoch, config['batch_size']))
-    decoder.test()  # train mode (dropout and batchnorm is used)
-    encoder.test()
+    decoder.eval()()  # train mode (dropout and batchnorm is used)
+    encoder.eval()()
     total_losses = AverageMeter()  # loss (per word decoded)
     total_per_char_acc = AverageMeter()
     total_string_acc = AverageMeter()
@@ -290,7 +290,9 @@ def test(epoch):
 
 for epoch in range(config['num_epochs']):
     train(epoch)
-    val = test(epoch)
+
+    with torch.no_grad():
+        val = test(epoch)
 
     if encoder_sched is not None:
         encoder_sched.step()
