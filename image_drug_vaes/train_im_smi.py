@@ -20,7 +20,10 @@ def kl_divergence(z, mu, std):
     # --------------------------
     # 1. define the first two probabilities (in this case Normal for both)
     p = torch.distributions.Normal(torch.zeros_like(mu), torch.ones_like(std))
-    q = torch.distributions.Normal(mu, std)
+    try:
+        q = torch.distributions.Normal(mu, std)
+    except RuntimeError:
+        print(mu)
 
     # 2. get the probabilities from the equation
     log_qzx = q.log_prob(z)
