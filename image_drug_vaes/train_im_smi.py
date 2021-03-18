@@ -30,7 +30,7 @@ def kl_divergence(z, mu, std):
     # kl
     kl = (log_qzx - log_pz)
     kl = kl.sum(-1)
-    return kl.mean()
+    return 0.0001 * kl.mean()
 
 torch.manual_seed(config['seed'])
 
@@ -265,7 +265,7 @@ def test(epoch):
 
         # Add doubly stochastic attention regularization
         loss += config['alpha_c'] * ((1. - alphas.sum(dim=1)) ** 2).mean()
-        loss += 0.05 * kl_divergence(z, imgs_vae, imgs_std)
+        loss +=  kl_divergence(z, imgs_vae, imgs_std)
 
         # Keep track of metrics
         total_losses.update(loss.item(), sum(decode_lengths))
