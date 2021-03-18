@@ -68,8 +68,8 @@ if __name__ == '__main__':
 
     def test(epoch):
         print("Epoch {}: batch_size {}".format(epoch, config['batch_size']))
-        decoder.test()  # train mode (dropout and batchnorm is used)
-        encoder.test()
+        decoder.eval()  # train mode (dropout and batchnorm is used)
+        encoder.eval()
         total_losses = AverageMeter()  # loss (per word decoded)
         total_per_char_acc = AverageMeter()
         total_string_acc = AverageMeter()
@@ -128,7 +128,8 @@ if __name__ == '__main__':
                 total_string_acc.update(1.0 if s1 == s2 else 0.0)
                 total_editDist.update(levenshteinDistance(s1, s2))
 
+            print(f'acc_c: {acc_c}, edit_distance: {1.0 if s1 == s2 else 0.0}')
             return total_losses.avg
 
-
-    test()
+    with torch.no_grad():
+        test(1)
