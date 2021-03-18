@@ -30,7 +30,7 @@ def kl_divergence(z, mu, std):
     # kl
     kl = (log_qzx - log_pz)
     kl = kl.sum(-1)
-    print(f"kl:{kl}")
+    print(f"kl:{kl.shape}")
     return kl
 
 torch.manual_seed(config['seed'])
