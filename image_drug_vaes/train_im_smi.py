@@ -14,6 +14,23 @@ from models.gridLSTM import GridLSTMDecoderWithAttention, Encoder
 from utils.DataLoader import MoleLoader
 from utils.utils import clip_gradient, AverageMeter, levenshteinDistance, CometHolder
 
+def kl_divergence(z, mu, std):
+    # --------------------------
+    # Monte carlo KL divergence
+    # --------------------------
+    # 1. define the first two probabilities (in this case Normal for both)
+    p = torch.distributions.Normal(torch.zeros_like(mu), torch.ones_like(std))
+    q = torch.distributions.Normal(mu, std)
+
+    # 2. get the probabilities from the equation
+    log_qzx = q.log_prob(z)
+    log_pz = p.log_prob(z)
+
+    # kl
+    kl = (log_qzx - log_pz)
+    kl = kl.sum(-1)
+    return kl
+
 torch.manual_seed(config['seed'])
 
 ## begin comet stuff
@@ -116,11 +133,14 @@ def train(epoch):
         caplens = embedlen.to(device).view(-1, 1)
 
         # Forward prop.
-        imgs_vae = encoder(imgs_orig)
+        imgs_vae, imgs_std = encoder(imgs_orig)
 
-        imgs_vae = imgs_vae.to(device)
 
-        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
+        std = torch.exp(imgs_std / 2)
+        q = torch.distributions.Normal(imgs_vae, std)
+        z = q.rsample()
+
+        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(z, caps, caplens,
                                                                         teacher_forcing=bool(epoch < 3))
 
         # Since we decoded starting with <start>, the targets are all words after <start>, up to <end>
@@ -138,6 +158,7 @@ def train(epoch):
 
         # Add doubly stochastic attention regularization
         loss += config['alpha_c'] * ((1. - alphas.sum(dim=1)) ** 2).mean()
+        loss += kl_divergence(z, imgs_vae, imgs_std)
 
         # Back prop.
         decoder_optimizer.zero_grad()
@@ -219,12 +240,14 @@ def test(epoch):
         caplens = embedlen.to(device).view(-1, 1)
 
         # Forward prop.
-        imgs_vae = encoder(imgs_orig)
+        imgs_vae, imgs_std = encoder(imgs_orig)
 
-        imgs_vae = imgs_vae.to(device)
+        std = torch.exp(imgs_std / 2)
+        q = torch.distributions.Normal(imgs_vae, std)
+        z = q.rsample()
 
-        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
-                                                                        teacher_forcing=bool(epoch < 3))
+        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(z, caps, caplens,
+                                                                        teacher_forcing=bool(epoch < 1))
 
         # Since we decoded starting with <start>, the targets are all words after <start>, up to <end>
         imgs_vae = imgs_vae[sort_ind]
@@ -241,6 +264,7 @@ def test(epoch):
 
         # Add doubly stochastic attention regularization
         loss += config['alpha_c'] * ((1. - alphas.sum(dim=1)) ** 2).mean()
+        loss += kl_divergence(z, imgs_vae, imgs_std)
 
         # Keep track of metrics
         total_losses.update(loss.item(), sum(decode_lengths))

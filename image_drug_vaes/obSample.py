@@ -14,12 +14,14 @@ from models.gridLSTM import GridLSTMDecoderWithAttention, Encoder
 from utils.DataLoader import MoleLoader
 from utils.utils import clip_gradient, AverageMeter, levenshteinDistance, CometHolder
 
+
 def get_args():
     from argparse import ArgumentParser
     parser = ArgumentParser()
     parser.add_argument('-m', required=True, help='saved trained model file (.pt)', type=str)
 
     return parser.parse_args()
+
 
 if __name__ == '__main__':
     args = get_args()
@@ -28,7 +30,7 @@ if __name__ == '__main__':
     vocab = pickle.load(open(config['vocab_file'], "rb"))
     vocab = {k: v for v, k in enumerate(vocab)}
 
-    train_data = MoleLoader(pd.read_csv("moses/data/val.csv"), vocab, max_len=config['vocab_max_len'],
+    train_data = MoleLoader(pd.read_csv("moses/data/train.csv"), vocab, max_len=config['vocab_max_len'],
                             start_char=config['start_char'], end_char=config['end_char'])
 
     train_loader_food = torch.utils.data.DataLoader(
@@ -39,7 +41,7 @@ if __name__ == '__main__':
     embedding_width = config['vocab_max_len']
     embedding_size = len(vocab)
 
-    device = torch.device("cuda" if config['cuda'] else "cpu")
+    device = torch.device("cuda" if config['cuda'] and torch.cuda.is_available() else "cpu")
     kwargs = config['data_loader_kwargs'] if config['cuda'] else {}
 
     ### Set up decoder
@@ -66,6 +68,41 @@ if __name__ == '__main__':
 
     criterion = nn.CrossEntropyLoss().to(device)
 
+
+    def sample(bsize=8):
+        print("Sampling random noise")
+        decoder.eval()
+        encoder.eval()
+
+        caps = torch.zeros((bsize, config['vocab_max_len'])).to(device).long()
+        caplens = (torch.zeros((bsize, 1)) + config['vocab_max_len']).to(device).long()
+        imgs_vae = torch.normal(mean=torch.zeros(bsize * 14 * 14 * 512), std=torch.ones(bsize * 14 * 14 * 512)).view(bsize, 14, 14, 512).to(
+            device).float()
+
+        scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
+                                                                        teacher_forcing=False)
+        imgs_vae = imgs_vae[sort_ind]
+
+        targets = caps_sorted[:, 1:]
+        scores_copy = scores.clone()
+        targets_copy = targets.clone()
+
+        scores = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+        targets = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+
+        _, preds = torch.max(scores_copy, dim=2)
+        preds = preds.cpu().numpy()
+        targets_copy = targets_copy.cpu().numpy()
+        for i in range(preds.shape[0]):
+            s1 = preds[i, ...]
+            s2 = targets_copy[i, ...]
+            s1 = "".join([charset[chars] for chars in s1]).strip()
+            s2 = "".join([charset[chars] for chars in s2]).strip()
+            print(s1)
+
+
+
+
     def test(epoch):
         print("Epoch {}: batch_size {}".format(epoch, config['batch_size']))
         decoder.eval()  # train mode (dropout and batchnorm is used)
@@ -87,7 +124,7 @@ if __name__ == '__main__':
             imgs_vae = imgs_vae.to(device)
 
             scores, caps_sorted, decode_lengths, alphas, sort_ind = decoder(imgs_vae, caps, caplens,
-                                                                            teacher_forcing=bool(epoch < 3))
+                                                                            teacher_forcing=False)
 
             # Since we decoded starting with <start>, the targets are all words after <start>, up to <end>
             imgs_vae = imgs_vae[sort_ind]
@@ -95,6 +132,7 @@ if __name__ == '__main__':
 
             print('imgs_vae_shape: ', imgs_vae.shape)
             print(imgs_orig.shape)
+            print(f"Cap lens {caplens.shape}, caps: {caps.shape}")
 
             targets = caps_sorted[:, 1:]
             scores_copy = scores.clone()
@@ -131,5 +169,6 @@ if __name__ == '__main__':
             print(f'acc_c: {acc_c}, edit_distance: {1.0 if s1 == s2 else 0.0}')
             return total_losses.avg
 
+
     with torch.no_grad():
-        test(1)
+        sample(4)

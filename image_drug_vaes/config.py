@@ -14,7 +14,7 @@ class Config():
             'use_checkpoint' : None,
             'load_checkpoint' : None,
 
-            'batch_size' : 512,
+            'batch_size' : 384,
             'num_epochs' : 1000,
             'early_stopping' : None,  #import and use EarlyStopping module from utils
             'distributed'     : False,  #run models on separate GPUs and shuffle data, use EXPORT CUDA DEVICES to specify three devices.
