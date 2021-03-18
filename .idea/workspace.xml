@@ -1,204 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f81e0f58-82c7-4569-8a50-61b82980ba91" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ImageDrugVAEs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ImageDrugVAEs.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="f81e0f58-82c7-4569-8a50-61b82980ba91" name="Default Changelist" comment="fixed val/train bug">
+      <change afterPath="$PROJECT_DIR$/image_drug_vaes/obSample.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AUTHORS.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HISTORY.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MANIFEST.in" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.rst" beforeDir="false" afterPath="$PROJECT_DIR$/README.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/authors.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/conf.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/contributing.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/history.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/installation.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/make.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/readme.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/usage.rst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/image_drug_vaes/train_im_smi.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_drug_vaes/train_im_smi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/.dockerignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/MANIFEST.in" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/11_p0.smi.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/dataset_v1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/aae_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/aae_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/aae_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/aae_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/metrics_aae_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/metrics_aae_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/aae/metrics_aae_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/char_rnn_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/char_rnn_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/char_rnn_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/char_rnn_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/metrics_char_rnn_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/metrics_char_rnn_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/char_rnn/metrics_char_rnn_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/combinatorial_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/combinatorial_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/combinatorial_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/combinatorial_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/metrics_combinatorial_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/metrics_combinatorial_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/combinatorial/metrics_combinatorial_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/hmm_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/hmm_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/hmm_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/hmm_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/metrics_hmm_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/metrics_hmm_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/hmm/metrics_hmm_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/jtn_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/jtn_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/jtn_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/jtn_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/metrics_jtn_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/metrics_jtn_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/jtn/metrics_jtn_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/latent_gan_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/latent_gan_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/latent_gan_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/latent_gan_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/metrics_latent_gan_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/metrics_latent_gan_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/latent_gan/metrics_latent_gan_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/metrics_ngram_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/metrics_ngram_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/metrics_ngram_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/ngram_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/ngram_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/ngram_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/ngram/ngram_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/train_metrics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/metrics_vae_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/metrics_vae_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/metrics_vae_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/vae_1.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/vae_2.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/vae_3.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/samples/vae/vae_all.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/test.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/test_scaffolds.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/test_scaffolds_stats.npz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/test_stats.npz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/data/train.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/CharRNN.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/CharRNN.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/GAN.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/GAN.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/LatentGAN.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/QED.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/QED.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/SA.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/SA.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/VAE_AAE.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/VAE_AAE.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/logP.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/logP.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/pipeline.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/pipeline.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/representations.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/representations.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/weight.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/images/weight.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/install_latentgan_dependencies.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/aae/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/aae/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/aae/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/aae/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/aae/trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/baselines/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/baselines/combinatorial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/baselines/hmm.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/baselines/ngram.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/char_rnn/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/char_rnn/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/char_rnn/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/char_rnn/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/char_rnn/trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/data/test.csv.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/data/test_scaffolds.csv.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/data/test_scaffolds_stats.npz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/data/test_stats.npz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/data/train.csv.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/dataset/dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/interfaces.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/latentgan/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/latentgan/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/latentgan/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/latentgan/heteroencoder_models/moses_pretrained.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/latentgan/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/latentgan/trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/NP_Score/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/NP_Score/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/NP_Score/npscorer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/NP_Score/publicnp.model.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/SA_Score/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/SA_Score/UnitTestSAScore.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/SA_Score/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/SA_Score/data/zim.100.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/SA_Score/fpscores.pkl.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/SA_Score/sascorer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/mcf.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/metrics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/metrics/wehi_pains.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/models_storage.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/organ/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/organ/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/organ/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/organ/metrics_reward.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/organ/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/organ/trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/script_utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/utils.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/vae/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/vae/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/vae/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/vae/misc.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/vae/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/moses/vae/trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/distribution_config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/distribution_plots.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/eval.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/prepare_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/print_table.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/run.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/run_all_models.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/sample.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/split_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/table_config.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/scripts/train.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/setup.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/tests/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/tests/test_baselines.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/moses/tests/test_metrics.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tox.ini" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -229,6 +46,7 @@
     <option name="width" value="3360" />
     <option name="height" value="1890" />
   </component>
+  <component name="ProjectId" id="1pqa5zaPkdXPiBrF4WSDX6f5Py4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -271,7 +89,13 @@
       <pane id="Scope" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="editor.config.ad.shown" value="true" />
@@ -280,10 +104,12 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/image_drug_vaes" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/example_images" />
     </key>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -295,7 +121,165 @@
       <option name="presentableId" value="Default" />
       <updated>1555506738106</updated>
       <workItem from="1555506740502" duration="767000" />
+      <workItem from="1615912896811" duration="2389000" />
+      <workItem from="1615925155979" duration="655000" />
+      <workItem from="1616079293822" duration="102000" />
     </task>
+    <task id="LOCAL-00001" summary="updated from library to code sample">
+      <created>1615824089002</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1615824089002</updated>
+    </task>
+    <task id="LOCAL-00002" summary="updated vocab file">
+      <created>1615824941205</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1615824941205</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixed endchar bug">
+      <created>1615825611900</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1615825611900</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fixed spelling error">
+      <created>1615825659864</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1615825659864</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fixed spelling error">
+      <created>1615825736908</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1615825736908</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fixed spelling error">
+      <created>1615825814130</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615825814130</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixed spelling error">
+      <created>1615826099216</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615826099216</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fixed spelling error">
+      <created>1615826229100</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615826229100</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fixed spelling error">
+      <created>1615826373695</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615826373695</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fixed spelling error">
+      <created>1615826512850</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615826512850</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fixed spelling error">
+      <created>1615826698385</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1615826698385</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fixed spelling error">
+      <created>1615827004642</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1615827004642</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fixed spelling error">
+      <created>1615827371055</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1615827371055</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fixed spelling error">
+      <created>1615827499060</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1615827499060</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fixed spelling error">
+      <created>1615828403218</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1615828403218</updated>
+    </task>
+    <task id="LOCAL-00016" summary="fixed spelling error">
+      <created>1615828471249</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1615828471249</updated>
+    </task>
+    <task id="LOCAL-00017" summary="fixed spelling error">
+      <created>1615828784097</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1615828784097</updated>
+    </task>
+    <task id="LOCAL-00018" summary="fixed spelling error">
+      <created>1615829024863</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1615829024863</updated>
+    </task>
+    <task id="LOCAL-00019" summary="fixed spelling error">
+      <created>1615833821686</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1615833821686</updated>
+    </task>
+    <task id="LOCAL-00020" summary="updated config">
+      <created>1615833876692</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1615833876692</updated>
+    </task>
+    <task id="LOCAL-00021" summary="updated config">
+      <created>1615839512007</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1615839512007</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fixed val/train bug">
+      <created>1615924609825</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1615924609825</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -328,7 +312,7 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -340,6 +324,16 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated from library to code sample" />
+    <MESSAGE value="updated vocab file" />
+    <MESSAGE value="fixed endchar bug" />
+    <MESSAGE value="fixed spelling error" />
+    <MESSAGE value="updated config" />
+    <MESSAGE value="fixed val/train bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed val/train bug" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/example_images/linspace_124.png">
